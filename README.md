@@ -1,2 +1,18 @@
 # UKRmolMatReader
-Python package to read K matrix file produced by https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/
+.
+
+## Installation
+
+Clone the repository and install with the following commands:
+
+    git clone https://github.com/petersbingham/UKRmolMatReader.git
+    cd UKRmolMatReader
+    python setup.py install
+    
+## Dependencies
+
+    
+## Usage
+
+The following example:
+
