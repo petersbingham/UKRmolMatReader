@@ -1,5 +1,6 @@
 # UKRmolMatReader
-.
+Python package to read K-matrix files produced by the UKRmol software as found here:
+https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/
 
 ## Installation
 
@@ -10,9 +11,33 @@ Clone the repository and install with the following commands:
     python setup.py install
     
 ## Dependencies
-
+pynumwrap https://github.com/petersbingham/pynumwrap
     
 ## Usage
 
-The following example:
+Call the `readkMats` with the path to your UKRmol K-matrix file. Note that the energies from the start to the end of the file must be in ascending order.
+There are two returned values:
+  1.  A dictionary keyed by energy with matrices as values.
+  2.  A list describing different open channels across the energy range. Each element in the list is another list describing that open channel; the first element is the number of open channels and the second is a two element list giving the starting and one past the end index of the range overwhich the set of open channels apply. This index will apply to a sorted list of the dictionary energies. This is clarified in the example below.
 
+There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. mpmath is the default. So change to standard python types change the mode by calling the module function `usePythonTypes()`
+
+The following example illustrate with some explanation following:
+```python
+>>> from UKRmolMatReader import *
+>>> usePythonTypes()
+>>> kmats,oChanDesc = readkMats("UKRmolMatReader/tests/water_inel_B1_10ch.19")
+>>> oChanDesc
+[[4, [0, 1025]], [10, [1025, 1800]]]
+>>> first = oChanDesc[0][1][0]
+>>> firstEne = sorted(kmats.keys())[first]
+>>> kmats[firstEne]
+matrix([[-0.44319103+0.j,  0.17810525+0.j,  0.00342772+0.j, -0.03147134+0.j],
+        [ 0.17810525+0.j, -0.00818044+0.j,  0.09482788+0.j, -0.00245007+0.j],
+        [ 0.00342772+0.j,  0.09482788+0.j, -0.03620601+0.j,  0.01289757+0.j],
+        [-0.03147134+0.j, -0.00245007+0.j,  0.01289757+0.j, -0.00201263+0.j]])
+```
+The oChanDesc `[[4, [0, 1025]], [10, [1025, 1800]]]` means the following:
+ * `[4, [0, 1025]]` refers to the channels below the first threshold. There are four channels, extending from the zero index to 1024 (one past the end used).
+ * `[10, [1025, 1800]]` refers to the channels between the first and second thresholds. There are ten channels, extending from the 1025 index to 1799 (one past the end used).
+ * Again, it is important to note that the indices apply to the sorted range of dictionary keys ie. to the list returned from `kmats.keys()`.

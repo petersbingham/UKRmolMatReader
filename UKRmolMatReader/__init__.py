@@ -86,3 +86,9 @@ def readkMats(fileName):
                 lineI += 1
     _flipCopyDiag(kmats)
     return kmats, oChanDesc
+
+def usePythonTypes():
+    nw.mode = nw.mode_norm
+
+def usempmathTypes():
+    nw.mode = nw.mode_mpmath
