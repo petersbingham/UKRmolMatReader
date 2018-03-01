@@ -11,7 +11,8 @@ Clone the repository and install with the following commands:
     python setup.py install
     
 ## Dependencies
-pynumwrap https://github.com/petersbingham/pynumwrap
+Author Libraries (these will have their own dependencies):
+ - pynumwrap https://github.com/petersbingham/pynumwrap
     
 ## Usage
 
