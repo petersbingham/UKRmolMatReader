@@ -9,7 +9,6 @@ import unittest
 
 class test_water_mats(unittest.TestCase):
     def runTest(self):
-        matRead.nw.mode = matRead.nw.mode_norm
         kmats,oChanDesc = matRead.readkMats("water_inel_B1_10ch.19")
         self.assertEqual(oChanDesc[0],[4,[0,1025]])
         self.assertEqual(oChanDesc[1],[10,[1025,1800]])

@@ -20,12 +20,11 @@ There are two returned values:
   1.  A dictionary keyed by energy with matrices as values.
   2.  A list describing different open channels across the energy range. Each element in the list is another list describing that open channel; the first element is the number of open channels and the second is a two element list giving the starting and one past the end index of the range overwhich the set of open channels apply. This index will apply to a sorted list of the dictionary energies. This is clarified in the example below.
 
-There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. mpmath is the default. So change to standard python types change the mode by calling the module function `usePythonTypes()`
+There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `usempmathTypes()`.
 
 The following example illustrate with some explanation following:
 ```python
 >>> from UKRmolMatReader import *
->>> usePythonTypes()
 >>> kmats,oChanDesc = readkMats("UKRmolMatReader/tests/water_inel_B1_10ch.19")
 >>> oChanDesc
 [[4, [0, 1025]], [10, [1025, 1800]]]
