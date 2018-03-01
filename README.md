@@ -22,7 +22,7 @@ There are two returned values:
 
 There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `usempmathTypes()`.
 
-The following example illustrate with some explanation following:
+The following example illustrates. Explanation follows.
 ```python
 >>> from UKRmolMatReader import *
 >>> kmats,oChanDesc = readkMats("UKRmolMatReader/tests/water_inel_B1_10ch.19")
