@@ -87,8 +87,8 @@ def readkMats(fileName):
     _flipCopyDiag(kmats)
     return kmats, oChanDesc
 
-def usePythonTypes():
-    nw.mode = nw.mode_norm
+def usePythonTypes(dps=nw.dps_default_python):
+    nw.usePythonTypes(dps)
 
-def usempmathTypes():
-    nw.mode = nw.mode_mpmath
+def usempmathTypes(dps=nw.dps_default_mpmath):
+    nw.usempmathTypes(dps)
