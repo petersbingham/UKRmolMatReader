@@ -21,8 +21,6 @@ There are two returned values:
   1.  A dictionary keyed by energy with matrices as values.
   2.  A list describing different open channels across the energy range. Each element in the list is another list describing that open channel; the first element is the number of open channels and the second is a two element list giving the starting and one past the end index of the range overwhich the set of open channels apply. This index will apply to a sorted list of the dictionary energies. This is clarified in the example below.
 
-There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `usempmathTypes()`.
-
 The following example illustrates. Explanation follows.
 ```python
 >>> from UKRmolMatReader import *
@@ -41,3 +39,5 @@ The oChanDesc `[[4, [0, 1025]], [10, [1025, 1800]]]` means the following:
  * `[4, [0, 1025]]` refers to the channels below the first threshold. There are four channels, extending from the zero index to 1024 (one past the end used).
  * `[10, [1025, 1800]]` refers to the channels between the first and second thresholds. There are ten channels, extending from the 1025 index to 1799 (one past the end used).
  * Again, it is important to note that the indices apply to the sorted range of dictionary keys ie. to the list returned from `kmats.keys()`.
+
+There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `usempmathTypes()`.
