@@ -90,5 +90,5 @@ def readkMats(fileName):
 def usePythonTypes(dps=nw.dps_default_python):
     nw.usePythonTypes(dps)
 
-def usempmathTypes(dps=nw.dps_default_mpmath):
-    nw.usempmathTypes(dps)
+def useMpmathTypes(dps=nw.dps_default_mpmath):
+    nw.useMpmathTypes(dps)
