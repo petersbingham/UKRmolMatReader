@@ -74,7 +74,7 @@ def readkMats(fileName):
                 numRemElements = numUniqueElements % 4
                 lineI = 0
                 ene = _num(nums[3])
-                kmats[ene] = nw.sqZeros(numChannels)
+                kmats[ene] = nw.zeroMatrix(numChannels)
                 cElement = 1
             else:
                 if lineI < numCompleteLinesPerMat:
