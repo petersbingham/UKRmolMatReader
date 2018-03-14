@@ -1,4 +1,8 @@
 import pynumwrap as nw
+try:
+    import tisutil as tu
+except:
+    tu = None
 
 NUMFIELDCHARS=20
 
@@ -41,6 +45,10 @@ def _flipCopyDiag(kmats):
             cElement += 1
             if indices[0] != indices[1]:
                 kmat[indices[1],indices[0]] = kmat[indices[0],indices[1]]
+
+########################################################################   
+######################### Public Interface #############################
+########################################################################
 
 def readkMats(fileName):
     kmats = {}
@@ -85,6 +93,8 @@ def readkMats(fileName):
                     cElement = _readLines(kmats, ene, line, numRemElements, cElement)
                 lineI += 1
     _flipCopyDiag(kmats)
+    if tu is not None:
+        kmats = dKmat(kmats, tu.RYDs)
     return kmats, oChanDesc
 
 def usePythonTypes(dps=nw.dps_default_python):
