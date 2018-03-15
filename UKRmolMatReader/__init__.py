@@ -94,7 +94,7 @@ def readkMats(fileName):
                 lineI += 1
     _flipCopyDiag(kmats)
     if tu is not None:
-        kmats = dKmat(kmats, tu.RYDs)
+        kmats = tu.dKmat(kmats, tu.RYDs)
     return kmats, oChanDesc
 
 def usePythonTypes(dps=nw.dps_default_python):
