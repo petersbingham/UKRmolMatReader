@@ -1,6 +1,6 @@
 # UKRmolMatReader
 Python package to read K-matrix files produced by the UKRmol software as found here:
-https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/
+https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/.
 
 ## Installation
 
