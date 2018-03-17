@@ -10,5 +10,5 @@ setup(name='UKRmolMatReader',
       author="Peter Bingham",
       author_email="petersbingham@hotmail.co.uk",
       packages=['UKRmolMatReader'],
-      package_data={'UKRmolMatReader': ['tests/*', 'README.md'],
+      package_data={'UKRmolMatReader': ['tests/*', 'README.md']}
      )
