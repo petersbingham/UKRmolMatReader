@@ -50,11 +50,11 @@ def _flipCopyDiag(kmats):
 ######################### Public Interface #############################
 ########################################################################
 
-def readkMats(fileName):
+def readkMats(fileName, asymCal=None):
     kmats = {}
     with open(fileName, 'rb') as file:
         linNum = 0
-        for i in range(0,5):
+        for _ in range(0,5):
             linNum += 1
             file.readline()
         ene = None
@@ -93,8 +93,9 @@ def readkMats(fileName):
                     cElement = _readLines(kmats, ene, line, numRemElements, cElement)
                 lineI += 1
     _flipCopyDiag(kmats)
-    if tu is not None:
-        ret = tu.dKmat(kmats, tu.RYDs)
+    if tu is not None and asymCal is not None:
+        assert asymCal.getUnits() == tu.RYDs
+        ret = tu.dKmat(kmats, asymCal)
     else:
         ret = kmats
     return ret, oChanDesc
