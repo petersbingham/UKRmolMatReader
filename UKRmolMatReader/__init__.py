@@ -46,13 +46,19 @@ def _flipCopyDiag(kmats):
             if indices[0] != indices[1]:
                 kmat[indices[1],indices[0]] = kmat[indices[0],indices[1]]
 
+def _getSourceStr(filePath, sourceStr):
+    if sourceStr is not None:
+        return sourceStr
+    # If not specified just return the filename
+    return os.path.splitext(filePath)[0].split(os.sep)[-1]
+
 ########################################################################   
 ######################### Public Interface #############################
 ########################################################################
 
-def readkMats(fileName, asymCal=None):
+def readkMats(filePath, asymCal=None, sourceStr=None):
     kmats = {}
-    with open(fileName, 'rb') as file:
+    with open(filePath, 'rb') as file:
         linNum = 0
         for _ in range(0,5):
             linNum += 1
@@ -95,7 +101,7 @@ def readkMats(fileName, asymCal=None):
     _flipCopyDiag(kmats)
     if tu is not None and asymCal is not None:
         assert asymCal.getUnits() == tu.RYDs
-        ret = tu.dKmat(kmats, asymCal)
+        ret = tu.dKmat(kmats, asymCal, _getSourceStr(filePath,sourceStr))
     else:
         ret = kmats
     return ret, oChanDesc
