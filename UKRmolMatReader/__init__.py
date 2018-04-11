@@ -1,3 +1,4 @@
+import os
 import pynumwrap as nw
 try:
     import tisutil as tu
