@@ -5,64 +5,64 @@ try:
 except:
     tu = None
 
-NUMFIELDCHARS=20
+num_field_chars=20
 
-def _checkLineLength(line, linNum, numElements):
-    if len(line)!=numElements*NUMFIELDCHARS+1 and len(line)!=numElements*NUMFIELDCHARS+2: #Depending on new line sequence
-        raise Exception("Line " + str(linNum) + " bad: " + str(line) + "  Len: " + str(len(line)) + "  Elements: " + str(numElements))
+def _check_line_length(line, lin_num, num_elements):
+    if len(line)!=num_elements*num_field_chars+1 and len(line)!=num_elements*num_field_chars+2: #Depending on new line sequence
+        raise Exception("Line " + str(lin_num) + " bad: " + str(line) + "  Len: " + str(len(line)) + "  Elements: " + str(num_elements))
 
-def _readLines(kmats, ene, line, numElements, cElement):
-    for i in range(numElements):
-        indices = _getIndices(cElement)
+def _read_lines(kmats, ene, line, num_elements, c_element):
+    for i in range(num_elements):
+        indices = _get_indices(c_element)
         kmats[ene][indices[0],indices[1]] = _num(line[i*20:(i+1)*20])
-        cElement += 1
-    return cElement
+        c_element += 1
+    return c_element
 
-def _getIndices(cElement):
+def _get_indices(c_element):
     rows = 1
     cnt = 0
-    while cnt < cElement:
+    while cnt < c_element:
         cnt += rows
         rows += 1
     ri = rows-2
-    pSum = _aSum(rows-2)
-    ci = cElement - pSum - 1
+    pSum = _a_sum(rows-2)
+    ci = c_element - pSum - 1
     return (ri, ci)
 
-def _aSum(n):
+def _a_sum(n):
     return n * (n+1) / 2
 
 def _num(string):
     return float(string.replace("D", "E").replace(" ", ""))
 
-def _flipCopyDiag(kmats):
+def _flip_copy_diag(kmats):
     for ene in kmats:
         kmat = kmats[ene]
-        numChannels = nw.shape(kmat)[0]
-        numUniqueElements = _aSum(numChannels) 
-        cElement = 1
+        num_channels = nw.shape(kmat)[0]
+        numUniqueElements = _a_sum(num_channels) 
+        c_element = 1
         for i in range(numUniqueElements):
-            indices = _getIndices(cElement)
-            cElement += 1
+            indices = _get_indices(c_element)
+            c_element += 1
             if indices[0] != indices[1]:
                 kmat[indices[1],indices[0]] = kmat[indices[0],indices[1]]
 
-def _getSourceStr(filePath, sourceStr):
-    if sourceStr is not None:
-        return sourceStr
+def _get_source_str(file_path, source_str):
+    if source_str is not None:
+        return source_str
     # If not specified just return the filename
-    return os.path.splitext(filePath)[0].split(os.sep)[-1]
+    return os.path.splitext(file_path)[0].split(os.sep)[-1]
 
 ########################################################################   
 ######################### Public Interface #############################
 ########################################################################
 
-def readkMats(filePath, asymcalc=None, sourceStr=None):
+def read_Kmats(file_path, asymcalc=None, source_str=None):
     kmats = {}
-    with open(filePath, 'rb') as file:
-        linNum = 0
+    with open(file_path, 'rb') as file:
+        lin_num = 0
         for _ in range(0,5):
-            linNum += 1
+            lin_num += 1
             file.readline()
         ene = None
         numCompleteLinesPerMat = 0
@@ -70,48 +70,48 @@ def readkMats(filePath, asymcalc=None, sourceStr=None):
         oChanDesc = []
         lastNumChannels = 0
         for line in file:
-            linNum += 1
+            lin_num += 1
             nums = filter(lambda x: x!="", line.split())
             if nums[0].find(".") == -1:
-                numChannels = int(nums[0])
-                if lastNumChannels != numChannels:
-                    lastNumChannels = numChannels
+                num_channels = int(nums[0])
+                if lastNumChannels != num_channels:
+                    lastNumChannels = num_channels
                     if len(oChanDesc) == 0:
-                        oChanDesc.append([numChannels,[0,1]])
+                        oChanDesc.append([num_channels,[0,1]])
                     else:
                         newStartInd = oChanDesc[-1][1][1]
                         newEndInd = newStartInd + 1
-                        oChanDesc.append([numChannels,[newStartInd,newEndInd]])
+                        oChanDesc.append([num_channels,[newStartInd,newEndInd]])
                 else:
                     oChanDesc[-1][1][1] += 1
-                numUniqueElements = _aSum(numChannels)
+                numUniqueElements = _a_sum(num_channels)
                 numCompleteLinesPerMat = numUniqueElements / 4
                 numRemElements = numUniqueElements % 4
                 lineI = 0
                 ene = _num(nums[3])
-                kmats[ene] = nw.zeroMatrix(numChannels)
-                cElement = 1
+                kmats[ene] = nw.zero_matrix(num_channels)
+                c_element = 1
             else:
                 if lineI < numCompleteLinesPerMat:
-                    _checkLineLength(line, linNum, 4)
-                    cElement = _readLines(kmats, ene, line, 4, cElement)
+                    _check_line_length(line, lin_num, 4)
+                    c_element = _read_lines(kmats, ene, line, 4, c_element)
                 elif numRemElements > 0:
-                    _checkLineLength(line, linNum, numRemElements)
-                    cElement = _readLines(kmats, ene, line, numRemElements, cElement)
+                    _check_line_length(line, lin_num, numRemElements)
+                    c_element = _read_lines(kmats, ene, line, numRemElements, c_element)
                 lineI += 1
-    _flipCopyDiag(kmats)
+    _flip_copy_diag(kmats)
     if tu is not None and asymcalc is not None:
-        assert asymcalc.getUnits() == tu.RYDs
-        ret = tu.dKmat(kmats, asymcalc, _getSourceStr(filePath,sourceStr))
+        assert asymcalc.get_units() == tu.RYDs
+        ret = tu.dKmat(kmats, asymcalc, _get_source_str(file_path,source_str))
     else:
         ret = kmats
     return ret, oChanDesc
 
-def usePythonTypes(dps=nw.dps_default_python):
-    nw.usePythonTypes(dps)
+def use_python_types(dps=nw.dps_default_python):
+    nw.use_python_types(dps)
 
-def useMpmathTypes(dps=nw.dps_default_mpmath):
-    nw.useMpmathTypes(dps)
+def use_mpmath_types(dps=nw.dps_default_mpmath):
+    nw.use_mpmath_types(dps)
 
-def setTypeMode(mode, dps=None):
-    nw.setTypeMode(mode, dps)
+def set_type_mode(mode, dps=None):
+    nw.set_type_mode(mode, dps)
