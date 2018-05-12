@@ -57,7 +57,7 @@ def _getSourceStr(filePath, sourceStr):
 ######################### Public Interface #############################
 ########################################################################
 
-def readkMats(filePath, asymCal=None, sourceStr=None):
+def readkMats(filePath, asymcalc=None, sourceStr=None):
     kmats = {}
     with open(filePath, 'rb') as file:
         linNum = 0
@@ -100,9 +100,9 @@ def readkMats(filePath, asymCal=None, sourceStr=None):
                     cElement = _readLines(kmats, ene, line, numRemElements, cElement)
                 lineI += 1
     _flipCopyDiag(kmats)
-    if tu is not None and asymCal is not None:
-        assert asymCal.getUnits() == tu.RYDs
-        ret = tu.dKmat(kmats, asymCal, _getSourceStr(filePath,sourceStr))
+    if tu is not None and asymcalc is not None:
+        assert asymcalc.getUnits() == tu.RYDs
+        ret = tu.dKmat(kmats, asymcalc, _getSourceStr(filePath,sourceStr))
     else:
         ret = kmats
     return ret, oChanDesc

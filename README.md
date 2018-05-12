@@ -1,4 +1,4 @@
-# UKRmolMatReader
+# ukrmolmatreader
 Python package to read K-matrix files produced by the UKRmol software as found here:
 https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/.
 
@@ -6,8 +6,8 @@ https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/.
 
 Clone the repository and install with the following commands:
 
-    git clone https://github.com/petersbingham/UKRmolMatReader.git
-    cd UKRmolMatReader
+    git clone https://github.com/petersbingham/ukrmolmatreader.git
+    cd ukrmolmatreader
     python setup.py install
     
 ## Dependencies
@@ -23,8 +23,8 @@ There are two returned values:
 
 The following example illustrates. Explanation follows.
 ```python
->>> from UKRmolMatReader import *
->>> kmats,oChanDesc = readkMats("UKRmolMatReader/tests/water_inel_B1_10ch.19")
+>>> from ukrmolmatreader import *
+>>> kmats,oChanDesc = readkMats("ukrmolmatreader/tests/water_inel_B1_10ch.19")
 >>> oChanDesc
 [[4, [0, 1025]], [10, [1025, 1800]]]
 >>> first = oChanDesc[0][1][0]
@@ -40,4 +40,4 @@ The oChanDesc `[[4, [0, 1025]], [10, [1025, 1800]]]` means the following:
  * `[10, [1025, 1800]]` refers to the channels between the first and second thresholds. There are ten channels, extending from the 1025 index to 1799 (one past the end used).
  * Again, it is important to note that the indices apply to the sorted range of dictionary keys ie. to the list returned from `kmats.keys()`.
 
-There are two types that the UKRmolMatReader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `usempmathTypes()`.
+There are two types that the ukrmolmatreader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `usempmathTypes()`.
