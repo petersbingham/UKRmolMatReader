@@ -25,8 +25,8 @@ def _get_indices(c_element):
         cnt += rows
         rows += 1
     ri = rows-2
-    pSum = _a_sum(rows-2)
-    ci = c_element - pSum - 1
+    p_sum = _a_sum(rows-2)
+    ci = c_element - p_sum - 1
     return (ri, ci)
 
 def _a_sum(n):
@@ -39,9 +39,9 @@ def _flip_copy_diag(kmats):
     for ene in kmats:
         kmat = kmats[ene]
         num_channels = nw.shape(kmat)[0]
-        numUniqueElements = _a_sum(num_channels) 
+        num_unique_elements = _a_sum(num_channels) 
         c_element = 1
-        for i in range(numUniqueElements):
+        for i in range(num_unique_elements):
             indices = _get_indices(c_element)
             c_element += 1
             if indices[0] != indices[1]:
@@ -65,47 +65,48 @@ def read_Kmats(file_path, asymcalc=None, source_str=None):
             lin_num += 1
             file.readline()
         ene = None
-        numCompleteLinesPerMat = 0
-        numRemElements = 0
-        oChanDesc = []
-        lastNumChannels = 0
+        num_complete_lines_per_mat = 0
+        num_rem_elements = 0
+        o_chan_desc = []
+        last_num_channels = 0
         for line in file:
             lin_num += 1
             nums = filter(lambda x: x!="", line.split())
             if nums[0].find(".") == -1:
                 num_channels = int(nums[0])
-                if lastNumChannels != num_channels:
-                    lastNumChannels = num_channels
-                    if len(oChanDesc) == 0:
-                        oChanDesc.append([num_channels,[0,1]])
+                if last_num_channels != num_channels:
+                    last_num_channels = num_channels
+                    if len(o_chan_desc) == 0:
+                        o_chan_desc.append([num_channels,[0,1]])
                     else:
-                        newStartInd = oChanDesc[-1][1][1]
-                        newEndInd = newStartInd + 1
-                        oChanDesc.append([num_channels,[newStartInd,newEndInd]])
+                        new_start_ind = o_chan_desc[-1][1][1]
+                        new_end_ind = new_start_ind + 1
+                        o_chan_desc.append([num_channels,
+                                            [new_start_ind,new_end_ind]])
                 else:
-                    oChanDesc[-1][1][1] += 1
-                numUniqueElements = _a_sum(num_channels)
-                numCompleteLinesPerMat = numUniqueElements / 4
-                numRemElements = numUniqueElements % 4
-                lineI = 0
+                    o_chan_desc[-1][1][1] += 1
+                num_unique_elements = _a_sum(num_channels)
+                num_complete_lines_per_mat = num_unique_elements / 4
+                num_rem_elements = num_unique_elements % 4
+                line_i = 0
                 ene = _num(nums[3])
                 kmats[ene] = nw.zero_matrix(num_channels)
                 c_element = 1
             else:
-                if lineI < numCompleteLinesPerMat:
+                if line_i < num_complete_lines_per_mat:
                     _check_line_length(line, lin_num, 4)
                     c_element = _read_lines(kmats, ene, line, 4, c_element)
-                elif numRemElements > 0:
-                    _check_line_length(line, lin_num, numRemElements)
-                    c_element = _read_lines(kmats, ene, line, numRemElements, c_element)
-                lineI += 1
+                elif num_rem_elements > 0:
+                    _check_line_length(line, lin_num, num_rem_elements)
+                    c_element = _read_lines(kmats, ene, line, num_rem_elements, c_element)
+                line_i += 1
     _flip_copy_diag(kmats)
     if tu is not None and asymcalc is not None:
-        assert asymcalc.get_units() == tu.RYDs
+        assert asymcalc.get_units() == tu.rydbergs
         ret = tu.dKmat(kmats, asymcalc, _get_source_str(file_path,source_str))
     else:
         ret = kmats
-    return ret, oChanDesc
+    return ret, o_chan_desc
 
 def use_python_types(dps=nw.dps_default_python):
     nw.use_python_types(dps)
