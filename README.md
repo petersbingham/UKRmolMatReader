@@ -18,13 +18,14 @@ Author Libraries (these will have their own dependencies):
 
 Call the `read_Kmats` with the path to your UKRmol K-matrix file. Note that the energies from the start to the end of the file must be in ascending order.
 There are two returned values:
-  1.  A dictionary keyed by energy with matrices as values.
+  1.  A dictionary keyed by energy with matrices as values. Or a `tisutil.dKmat` if the `tisutil` module is available.
   2.  A list describing different open channels across the energy range. Each element in the list is another list describing that open channel; the first element is the number of open channels and the second is a two element list giving the starting and one past the end index of the range overwhich the set of open channels apply. This index will apply to a sorted list of the dictionary energies. This is clarified in the example below.
 
 The following example illustrates. Explanation follows.
 ```python
->>> from ukrmolmatreader import *
->>> kmats,o_chan_desc = read_Kmats("ukrmolmatreader/tests/water_inel_B1_10ch.19")
+>>> import ukrmolmatreader as matread
+>>> module_dir = os.path.dirname(os.path.realpath(matread.__file__))
+>>> kmats,o_chan_desc = matread.read_Kmats(module_dir+"/tests/water_inel_B1_10ch.19")
 >>> o_chan_desc
 [[4, [0, 1025]], [10, [1025, 1800]]]
 >>> first = o_chan_desc[0][1][0]
