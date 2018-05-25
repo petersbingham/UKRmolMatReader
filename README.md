@@ -13,6 +13,7 @@ Clone the repository and install with the following commands:
 ## Dependencies
 Author Libraries (these will have their own dependencies):
  - pynumwrap https://github.com/petersbingham/pynumwrap
+ - tisutil (optional) https://github.com/petersbingham/tisutil
     
 ## Usage
 
