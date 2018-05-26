@@ -11,7 +11,7 @@ Clone the repository and install with the following commands:
     python setup.py install
     
 ## Dependencies
-Author Libraries (these will have their own dependencies):
+Author packages (these will have their own dependencies):
  - pynumwrap https://github.com/petersbingham/pynumwrap
  - tisutil (optional) https://github.com/petersbingham/tisutil
  - channelutil (optional) https://github.com/petersbingham/channelutil
