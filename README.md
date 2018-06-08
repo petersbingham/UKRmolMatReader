@@ -12,15 +12,15 @@ Clone the repository and install with the following commands:
     
 ## Dependencies
 Author packages (these will have their own dependencies):
- - pynumwrap https://github.com/petersbingham/pynumwrap
- - tisutil (optional) https://github.com/petersbingham/tisutil
- - channelutil (optional) https://github.com/petersbingham/channelutil
+ - [pynumwrap](https://github.com/petersbingham/pynumwrap)
+ - [tisutil](https://github.com/petersbingham/tisutil) (optional)
+ - [channelutil](https://github.com/petersbingham/channelutil) (optional)
     
 ## Usage
 
 Call the `read_Kmats(file_path, asymcalc=None, source_str=None)` with the path to your UKRmol K-matrix file. Note that the energies from the start to the end of the file must be in ascending order.
 There are two returned values:
-  1.  A dictionary keyed by energy with matrices as values. Or a `tisutil.dKmat` if the `tisutil` module is available; the `dKmat` will require a `channelutil.AsymCalc` like object and a `source_str`, which can be passed as the optional parameters to `read_Kmats` (see https://github.com/petersbingham/channelutil and  https://github.com/petersbingham/tisutil for further details). 
+  1.  A dictionary keyed by energy with matrices as values. Or a `tisutil.dKmat` if the `tisutil` module is available; the `dKmat` will require a `channelutil.AsymCalc` like object and a `source_str`, which can be passed as the optional parameters to `read_Kmats` (see [channelutil](https://github.com/petersbingham/channelutil) and [tisutil](https://github.com/petersbingham/tisutil) for further details). 
   2.  A list describing different open channels across the energy range. Each element in the list is another list describing that open channel; the first element is the number of open channels and the second is a two element list giving the starting and one past the end index of the range overwhich the set of open channels apply. This index will apply to a sorted list of the dictionary energies. This is clarified in the example below.
 
 There are two types that the ukrmolmatreader is compatible with, standard python types and mpmath types. Python types is the default. To change to mpmath types call the module function `use_mpmath_types()`.
