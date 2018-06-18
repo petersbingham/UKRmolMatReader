@@ -5,7 +5,7 @@ import shutil
 shutil.copy('README.md', 'ukrmolmatreader/README.md')
 
 setup(name='ukrmolmatreader',
-      version='0.14',
+      version='1.0.0',
       description='Python package to read K matrix files produced by https://ccpforge.cse.rl.ac.uk/gf/project/ukrmol-out/.',
       author="Peter Bingham",
       author_email="petersbingham@hotmail.co.uk",
