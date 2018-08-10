@@ -29,7 +29,7 @@ The following example illustrates. Explanation follows.
 ```python
 >>> import ukrmolmatreader as matread
 >>> module_dir = os.path.dirname(os.path.realpath(matread.__file__))
->>> kmats,o_chan_desc = matread.read_Kmats(module_dir+"/tests/water_inel_B1_10ch.19")
+>>> kmats,chan_desc = matread.read_Kmats(module_dir+"/tests/water_inel_B1_10ch.19")
 >>> o_chan_desc
 [[4, [0, 1025]], [10, [1025, 1800]]]
 >>> first = o_chan_desc[0][1][0]
@@ -40,7 +40,7 @@ matrix([[-0.44319103+0.j,  0.17810525+0.j,  0.00342772+0.j, -0.03147134+0.j],
         [ 0.00342772+0.j,  0.09482788+0.j, -0.03620601+0.j,  0.01289757+0.j],
         [-0.03147134+0.j, -0.00245007+0.j,  0.01289757+0.j, -0.00201263+0.j]])
 ```
-The o_chan_desc `[[4, [0, 1025]], [10, [1025, 1800]]]` means the following:
+The chan_desc `[[4, [0, 1025]], [10, [1025, 1800]]]` means the following:
  * `[4, [0, 1025]]` refers to the channels below the first threshold. There are four channels, extending from the zero index to 1024 (one past the end used).
  * `[10, [1025, 1800]]` refers to the channels between the first and second thresholds. There are ten channels, extending from the 1025 index to 1799 (one past the end used).
  * Again, it is important to note that the indices apply to the sorted range of dictionary keys ie. to the list returned from `kmats.keys()`.

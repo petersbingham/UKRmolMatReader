@@ -67,7 +67,7 @@ def read_Kmats(file_path, asymcalc=None, source_str=None):
         ene = None
         num_complete_lines_per_mat = 0
         num_rem_elements = 0
-        o_chan_desc = []
+        chan_desc = []
         last_num_channels = 0
         for line in file:
             lin_num += 1
@@ -76,15 +76,15 @@ def read_Kmats(file_path, asymcalc=None, source_str=None):
                 num_channels = int(nums[0])
                 if last_num_channels != num_channels:
                     last_num_channels = num_channels
-                    if len(o_chan_desc) == 0:
-                        o_chan_desc.append([num_channels,[0,1]])
+                    if len(chan_desc) == 0:
+                        chan_desc.append([num_channels,[0,1]])
                     else:
-                        new_start_ind = o_chan_desc[-1][1][1]
+                        new_start_ind = chan_desc[-1][1][1]
                         new_end_ind = new_start_ind + 1
-                        o_chan_desc.append([num_channels,
+                        chan_desc.append([num_channels,
                                             [new_start_ind,new_end_ind]])
                 else:
-                    o_chan_desc[-1][1][1] += 1
+                    chan_desc[-1][1][1] += 1
                 num_unique_elements = _a_sum(num_channels)
                 num_complete_lines_per_mat = num_unique_elements / 4
                 num_rem_elements = num_unique_elements % 4
@@ -106,7 +106,7 @@ def read_Kmats(file_path, asymcalc=None, source_str=None):
         ret = tu.dKmat(kmats, asymcalc, _get_source_str(file_path,source_str))
     else:
         ret = kmats
-    return ret, o_chan_desc
+    return ret, chan_desc
 
 def use_python_types():
     nw.use_python_types()
