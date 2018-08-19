@@ -4,6 +4,7 @@ try:
     import tisutil as tu
 except:
     tu = None
+from ukrmolmatreader.release import __version__
 
 num_field_chars=20
 
