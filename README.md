@@ -30,9 +30,9 @@ The following example illustrates. Explanation follows.
 >>> import ukrmolmatreader as matread
 >>> module_dir = os.path.dirname(os.path.realpath(matread.__file__))
 >>> kmats,chan_desc = matread.read_Kmats(module_dir+"/tests/water_inel_B1_10ch.19")
->>> o_chan_desc
+>>> chan_desc
 [[4, [0, 1025]], [10, [1025, 1800]]]
->>> first = o_chan_desc[0][1][0]
+>>> first = chan_desc[0][1][0]
 >>> firstEne = sorted(kmats.keys())[first]
 >>> kmats[firstEne]
 matrix([[-0.44319103+0.j,  0.17810525+0.j,  0.00342772+0.j, -0.03147134+0.j],
